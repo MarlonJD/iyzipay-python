@@ -1,6 +1,8 @@
 # coding=utf-8
 
 import iyzipay
+import base64
+import json
 
 options = {
     'api_key': iyzipay.api_key,
@@ -70,7 +72,7 @@ basket_items = [
 
 request = {
     'locale': 'tr',
-    'conversationId': '123456789',
+    'conversationId': '12457411',
     'price': '1',
     'paidPrice': '1.2',
     'currency': 'TRY',
@@ -87,5 +89,8 @@ request = {
 }
 
 threeds_initialize = iyzipay.ThreedsInitialize().create(request, options)
+threeds_initialize_response = json.loads(threeds_initialize.read().decode('utf-8'))
 
-print(threeds_initialize.read().decode('utf-8'))
+print("Response: ",threeds_initialize_response)
+
+print("HTML Content: ",base64.b64decode(threeds_initialize_response['threeDSHtmlContent']).decode('utf-8'))
